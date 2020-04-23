@@ -20,14 +20,33 @@ enum MoodSwing: String {
 }
 
 extension Entry {
+    
+    var entryRepresntation: EntryRepresentation? {
+        guard let title = title,
+            let mood = mood else {
+                return nil
+        }
+        
+        return EntryRepresentation(bodyText: bodyText,
+                                   identifier: identifier?.uuidString,
+                                   mood: mood,
+                                   timestamp: timestamp ?? Date(),
+                                   title: title)
+    }
+    
     @discardableResult
-    convenience init(title: String, bodyText: String, mood: MoodSwing = .😐, context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
+    convenience init(title: String,
+                     bodyText: String?,
+                     mood: MoodSwing = .😐,
+                     identifier: UUID? = UUID(),
+                     timestamp: Date,
+                     context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
         
         self.init(context: context)
         self.title = title
         self.bodyText = bodyText
         self.mood = mood.rawValue
-//        self.identifier = identifier
-//        self.timestamp = timestamp
+        self.identifier = identifier
+        self.timestamp = timestamp
     }
 }

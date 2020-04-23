@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11557E0F23FCE4EA00D0B1F0 /* EntryRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557E0E23FCE4EA00D0B1F0 /* EntryRepresentation.swift */; };
 		11ABEBF523F4E711002C213E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ABEBF423F4E711002C213E /* AppDelegate.swift */; };
 		11ABEBF723F4E711002C213E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ABEBF623F4E711002C213E /* SceneDelegate.swift */; };
 		11ABEBFC23F4E711002C213E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11ABEBFA23F4E711002C213E /* Main.storyboard */; };
@@ -22,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		11557E0D23FCE2ED00D0B1F0 /* Journal (Core Data) 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Journal (Core Data) 3.xcdatamodel"; sourceTree = "<group>"; };
+		11557E0E23FCE4EA00D0B1F0 /* EntryRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryRepresentation.swift; sourceTree = "<group>"; };
 		11ABEBF123F4E711002C213E /* Journal (Core Data).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Journal (Core Data).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		11ABEBF423F4E711002C213E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		11ABEBF623F4E711002C213E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				11ABEC0C23F4EBAE002C213E /* CoreDataStack.swift */,
+				11557E0E23FCE4EA00D0B1F0 /* EntryRepresentation.swift */,
 			);
 			path = "Core Data";
 			sourceTree = "<group>";
@@ -206,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11ABEC1523F4F0E0002C213E /* Journal (Core Data).xcdatamodeld in Sources */,
+				11557E0F23FCE4EA00D0B1F0 /* EntryRepresentation.swift in Sources */,
 				11ABEC0D23F4EBAE002C213E /* CoreDataStack.swift in Sources */,
 				11ABEC0923F4E820002C213E /* EntriesTableViewController.swift in Sources */,
 				11ABEBF523F4E711002C213E /* AppDelegate.swift in Sources */,
@@ -416,10 +421,11 @@
 		11ABEC1323F4F0E0002C213E /* Journal (Core Data).xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				11557E0D23FCE2ED00D0B1F0 /* Journal (Core Data) 3.xcdatamodel */,
 				11ABEC2123F78D36002C213E /* Journal (Core Data) 2.xcdatamodel */,
 				11ABEC1423F4F0E0002C213E /* Journal (Core Data).xcdatamodel */,
 			);
-			currentVersion = 11ABEC2123F78D36002C213E /* Journal (Core Data) 2.xcdatamodel */;
+			currentVersion = 11557E0D23FCE2ED00D0B1F0 /* Journal (Core Data) 3.xcdatamodel */;
 			path = "Journal (Core Data).xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

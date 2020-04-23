@@ -13,6 +13,7 @@ class EntryTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        updateViews()
     }
     
     // MARK: - Properties
@@ -45,7 +46,7 @@ class EntryTableViewCell: UITableViewCell {
         
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "mm/dd/yyyy, hh:mm"
+        formatter.dateFormat = "MM/dd/yyyy, hh:mm"
         
         dateLabel.text = formatter.string(from: entry?.timestamp ?? Date())
     }

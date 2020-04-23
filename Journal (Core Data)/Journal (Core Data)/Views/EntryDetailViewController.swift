@@ -20,20 +20,17 @@ class EntryDetailViewController: UIViewController {
     
     // MARK: - Outlets
     @IBOutlet var moodControl: UISegmentedControl!
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
-        // Do any additional setup after loading the view.
     }
     
     // MARK: - Outlets
-    
     @IBOutlet var entryTextField: UITextField!
     @IBOutlet var entryTextView: UITextView!
     
-    
+
     // MARK: - Actions
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         guard let title = entryTextField.text,
@@ -47,7 +44,7 @@ class EntryDetailViewController: UIViewController {
             entry.bodyText = bodyText
             entry.mood = mood.rawValue
         } else {
-            Entry(title: title, bodyText: bodyText!, mood: mood)
+            Entry(title: title, bodyText: bodyText, mood: mood, timestamp: Date())
         }
         
         do {
@@ -56,7 +53,6 @@ class EntryDetailViewController: UIViewController {
         } catch {
             print("Error saving entry: \(error)")
         }
-        
         navigationController?.popViewController(animated: true)
     }
     
@@ -75,19 +71,5 @@ class EntryDetailViewController: UIViewController {
         }
         
         moodControl.selectedSegmentIndex = MoodSwing.allMoods.firstIndex(of: mood) ?? 1
-        
     }
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

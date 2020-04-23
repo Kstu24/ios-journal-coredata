@@ -27,13 +27,9 @@ class EntriesTableViewController: UITableViewController {
                                              cacheName: nil)
         
         frc.delegate = self
-        try! frc.performFetch()
+        try? frc.performFetch()
         return frc
     }()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -44,7 +40,7 @@ class EntriesTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        fetchedResultsController.sections?.count ?? 1
+        return fetchedResultsController.sections?.count ?? 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -53,43 +49,57 @@ class EntriesTableViewController: UITableViewController {
     }
         
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let sectionInfo = fetchedResultsController.sections?[section]
-        return sectionInfo?.name
+        guard let sectionInfo = fetchedResultsController.sections?[section] else { return nil}
+        return sectionInfo.name
         }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "EntryTableViewCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "EntryTableViewCell", for: indexPath) as? EntryTableViewCell else { return UITableViewCell()}
 
         let entry = fetchedResultsController.object(at: indexPath)
-        cell.textLabel?.text = entry.title
+        cell.entry = entry
 
         return cell
     }
     
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            let task = fetchedResultsController.object(at: indexPath)
+//            taskController.deleteTaskFromServer(task) { error in
+//                if let error = error {
+//                    print("Error deleting task from server: \(error)")
+//                    return
+//                }
+//                CoreDataStack.shared.mainContext.delete(task)
+//                do {
+//                    try CoreDataStack.shared.mainContext.save()
+//                } catch {
+//                    CoreDataStack.shared.mainContext.reset()
+//                    NSLog("Error saving managed object context: \(error)")
+//                }
+//            }
+//        }
+//    }
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let entry = fetchedResultsController.object(at: indexPath)
             let moc = CoreDataStack.shared.mainContext
-            moc.delete(entry)
-            
-            do {
-                try moc.save()
-            } catch {
-                print("Error saving deleted task: \(error)")
+            DispatchQueue.main.async {
+                moc.delete(entry)
+                do {
+                    try moc.save()
+                } catch {
+                    print("Error saving deleted task: \(error)")
+                    moc.reset()
+                }
             }
-            tableView.reloadData()
     }
 }
 
@@ -103,29 +113,31 @@ class EntriesTableViewController: UITableViewController {
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
             detailVC.entry = fetchedResultsController.object(at: indexPath)
         }
+        if segue.identifier == "AddJournalEntry" {
+            guard let addDetailVC = segue.destination as? EntryDetailViewController else { return }
+            guard let indexPath = tableView.indexPathForSelectedRow else { return }
+            addDetailVC.entry = fetchedResultsController.object(at: indexPath)
+        }
+
     }
 }
-
 extension EntriesTableViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
-    
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
-    
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch type {
         case .insert:
             tableView.insertSections(IndexSet(integer: sectionIndex), with: .automatic)
         case .delete:
-            tableView.insertSections(IndexSet(integer: sectionIndex), with: .automatic)
+            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .automatic)
         default:
             break
         }
     }
-    
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .insert:
@@ -142,7 +154,7 @@ extension EntriesTableViewController: NSFetchedResultsControllerDelegate {
         case .delete:
             guard let indexPath = indexPath else { return }
             tableView.deleteRows(at: [indexPath], with: .automatic)
-        default: //@unknown
+        @unknown default:
             break
         }
     }
