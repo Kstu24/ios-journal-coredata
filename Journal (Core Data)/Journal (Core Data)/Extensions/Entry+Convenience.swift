@@ -28,7 +28,7 @@ extension Entry {
         }
         
         return EntryRepresentation(bodyText: bodyText,
-                                   identifier: identifier?.uuidString,
+                                   identifier: identifier!.uuidString,
                                    mood: mood,
                                    timestamp: timestamp ?? Date(),
                                    title: title)

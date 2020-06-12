@@ -53,7 +53,19 @@ class EntryDetailViewController: UIViewController {
         } catch {
             print("Error saving entry: \(error)")
         }
+        
+        let notificationName = NSNotification.Name(rawValue: "Bell has been rung!")
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(bellHasRung),
+                                               name: notificationName,
+                                               object: nil)
+        
         navigationController?.popViewController(animated: true)
+        
+    }
+    
+    @objc func bellHasRung() {
+        print("Bell has been rung!")
     }
     
     func updateViews() {

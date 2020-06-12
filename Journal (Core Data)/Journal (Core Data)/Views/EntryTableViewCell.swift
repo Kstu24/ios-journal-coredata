@@ -46,7 +46,8 @@ class EntryTableViewCell: UITableViewCell {
         
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy, hh:mm"
+        formatter.timeZone = TimeZone(abbreviation: "EST")
+        formatter.dateFormat = "MM/dd/yyyy h:mm a"
         
         dateLabel.text = formatter.string(from: entry?.timestamp ?? Date())
     }

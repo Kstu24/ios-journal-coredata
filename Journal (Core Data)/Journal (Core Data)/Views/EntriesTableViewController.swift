@@ -63,29 +63,6 @@ class EntriesTableViewController: UITableViewController {
         return cell
     }
     
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
-
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            let task = fetchedResultsController.object(at: indexPath)
-//            taskController.deleteTaskFromServer(task) { error in
-//                if let error = error {
-//                    print("Error deleting task from server: \(error)")
-//                    return
-//                }
-//                CoreDataStack.shared.mainContext.delete(task)
-//                do {
-//                    try CoreDataStack.shared.mainContext.save()
-//                } catch {
-//                    CoreDataStack.shared.mainContext.reset()
-//                    NSLog("Error saving managed object context: \(error)")
-//                }
-//            }
-//        }
-//    }
-    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -102,7 +79,6 @@ class EntriesTableViewController: UITableViewController {
             }
     }
 }
-
     
     // MARK: - Navigation
 
